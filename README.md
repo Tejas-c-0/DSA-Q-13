@@ -2,26 +2,13 @@
 
 ## Problem
 Given an array `nums` containing `n` distinct numbers in the range [0, n],  
-return the only number in the range that is missing.
+return the missing number.
 
 ---
 
-## Approach 1: Sum Formula
-- Calculate expected sum using n*(n+1)/2
-- Subtract actual sum of array
-- The difference is the missing number
-
----
-
-## Complexity
-- Time: O(n)
-- Space: O(1)
-
----
-
-## Approach 2: XOR
-- XOR all indices and elements
-- Duplicate values cancel out
+## Approach (XOR)
+- XOR all indices and array elements
+- Same numbers cancel out (a ^ a = 0)
 - Remaining value is the missing number
 
 ---
@@ -33,9 +20,7 @@ return the only number in the range that is missing.
 ---
 
 ## Key Insight
-Both methods eliminate existing numbers and leave the missing one:
-- Sum method uses math
-- XOR method uses bit manipulation
+XOR cancels duplicate values and leaves the missing number.
 
 ---
 
@@ -45,9 +30,12 @@ Output: 2
 
 ---
 
-## Code (Sum Method)
+## Code
 ```python
 def missingNumber(nums):
-    n = len(nums)
-    total = n * (n + 1) // 2
-    return total - sum(nums)
+    result = len(nums)
+
+    for i in range(len(nums)):
+        result ^= i ^ nums[i]
+
+    return result
